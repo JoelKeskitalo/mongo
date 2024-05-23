@@ -1,0 +1,3 @@
+kan du förklara följande för mig:
+
+är det korrekt att säga att vi vid const User = mongoose.model('User', userSchema) skapar KLASSEN User? Eller är det modellen? Eller är det samma sak?
