@@ -7,8 +7,8 @@ const bookSchema = new mongoose.Schema({
     },
     author: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Author', 
-        required: true },
+        ref: 'Author',  // här refererar vi till vår skapade modell, authorModel
+        required: true
     },
     year: {
         type: Number
@@ -16,7 +16,7 @@ const bookSchema = new mongoose.Schema({
     genre: {
         type: String
     }
-)
+})
 
 // pre innebär att denna funktion körs automatiskt innan ett book-dokument sparas i databasen, därav PRE
 bookSchema.pre('save', function(next) {

@@ -1,5 +1,7 @@
 const Book = require('../models/bookModel')
 
+// promises med .then o .catch, istället för try o catch  
+
 // create a fucking b00k-sama
 exports.createBook = (req, res) => {
     const newBook = new Book(req.body)
@@ -17,12 +19,40 @@ exports.createMultipleBooks = (req, res) => {
 }
 
 // hämta da b00ks (alla böcker)
+exports.getAllBooks = (req, res) => {
+    Book.find().populate('author')
+        .then((books) => res.status(200).json(books))
+        .catch((error) => res.status(500).json(error))
+}
 
 // uppdatera en bok baserat på titel 
+exports.updateBookByTitle = (req, res) => {
+    const { title, year } = req.body
+    Book.findOneAndUpdate({ title }, { year })
+        .then((result) => res.status(200).json(result))
+}
 
 // ta bort en bok baserat på titel 
+exports.removeBookByTitle = (req, res) => {
+    const { title } = req.body 
+    Book.findOneAndDelete( { title } )
+        .then((result) => res.status(200).json(result))
+        .catch((error) => res.status(400).json(error))
+}
 
-// hämta böcker av en viss författare 
+
+// hämta böcker av en viss författare
+exports.getBooksByAuthor = (req, res) => {
+    const { author } = req.body
+    Book.find({author})
+        .then((authorBooks) => res.status(200).json(authorBooks))
+        .catch((error) => res.status(400).json(error))
+} 
 
 // räkna böcker som tillhör en viss genre 
-
+exports.countBooksByGenre = (req, res) => {
+    const { genre } = req.params
+    Book.countDocuments({genre})
+        .then((count) => res.status(200).json(genre, count))
+        .catch((error) => res.status(400).json(error))
+}
