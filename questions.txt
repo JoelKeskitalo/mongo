@@ -1,3 +1,4 @@
-kan du förklara följande för mig:
+Questions along the way:
 
-är det korrekt att säga att vi vid const User = mongoose.model('User', userSchema) skapar KLASSEN User? Eller är det modellen? Eller är det samma sak?
+sluta spionera på mig motherfuckersssssssssssss O_o ???
+skoja ni är så välkomna så <3 

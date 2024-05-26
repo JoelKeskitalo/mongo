@@ -1,15 +1,15 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
+require('dotenv').config()
+const express = require('express')
+const mongoose = require('mongoose')
 
 const connectDB = require('./config/database')
 
-const app = express();
-app.use(express.json());
+const app = express()
+app.use(express.json())
 
 connectDB()
 
-const { User, Product } = require('./models')
+const { User, Product, Book } = require('./models')
 
 
 
@@ -17,13 +17,14 @@ const { User, Product } = require('./models')
 
 app.post('/users', async (req, res) => {
     try {
-        const user = new User(req.body); // Skapa ett nytt objekt av User-modellen/mallen
-        await user.save(); // Vänta på att användaren sparas
-        res.status(201).send(user); // Skicka den sparade användaren i svaret
+        const user = new User(req.body) // Skapa ett nytt objekt av User-modellen/mallen
+        await user.save() // Vänta på att användaren sparas
+        res.status(201).send(user) // Skicka den sparade användaren i svaret
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).send(error.message)
     }
 });
+
 
 app.get('/users', async (req, res) => {
     try {
@@ -33,6 +34,7 @@ app.get('/users', async (req, res) => {
         res.status(500).send(error.message)
     }
 })
+
 
 app.get('/users/:id', async (req, res) => {
     try {
@@ -52,6 +54,7 @@ app.get('/users/:id', async (req, res) => {
         res.status(500).send(error.message)
     }
 })
+
 
 app.put('/users/:id', async (req, res) => {
 
@@ -82,6 +85,7 @@ app.put('/users/:id', async (req, res) => {
     }
 })
 
+
 app.delete('/users/:id', async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -102,6 +106,36 @@ app.delete('/users/:id', async (req, res) => {
         res.status(500).send(error.message);
     }
 })
+
+
+
+// Skriv ett skript som skapar och sparar fem olika böcker i Book-samlingen. Books skapade i booksModels.js
+
+
+
+const createFiveBooks = () => {
+
+    const books = [
+        {title: 'Harry Potter and the Philosophers Stone', author: 'J.K. Rowling', year: 1997, genre: 'Fantasy'},
+        {title: 'Superintelligence', author: 'Nick Bostrom', year: 2016, genre: 'Non-fiction'},
+        {title: 'Stalin: Waiting for Hitler', author: 'Stephen Kotkin', year: 2020, genre: 'History'},
+        {title: 'Lord of the Rings: The Fellowship of the ring', author: 'G.R.R. Martin', year: 1954, genre: 'Fantasy'},
+        {title: 'Snabba Cash', author: 'Jens Lapidus', year: 2001, genre: 'Non-fiction'}
+    ]
+    
+    Book.insertMany(books)
+        .then(() => {
+            console.log('Books inserted:', books)
+            mongoose.connection.close()
+        })
+        .catch((err) => {
+            console.error(err)
+            mongoose.connection.close()
+        })
+
+    return books
+}
+
 
 
 
