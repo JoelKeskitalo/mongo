@@ -30,6 +30,7 @@ exports.updateBookByTitle = (req, res) => {
     const { title, year } = req.body
     Book.findOneAndUpdate({ title }, { year })
         .then((result) => res.status(200).json(result))
+        .catch((error) => res.status(400).json(error))
 }
 
 // ta bort en bok baserat på titel 

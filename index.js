@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const bookRoutes = require('./routes/bookRoutes')
 
 const connectDB = require('./config/database')
 
@@ -137,6 +138,8 @@ const createFiveBooks = () => {
 }
 
 
+
+app.use('/books', bookRoutes)
 
 
 app.listen(process.env.PORT, () => {
