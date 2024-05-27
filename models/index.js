@@ -1,7 +1,7 @@
-const User = require('./userModels')
-const Product = require('./productModels')
-const Book = require('./bookModels')
-const Author = require('./authorModels')
+const User = require('./userModel')
+const Product = require('./productModel')
+const Book = require('./bookModel')
+const Author = require('./authorModel')
 
 module.exports = {
     User,

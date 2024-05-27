@@ -3,26 +3,15 @@ const bookController = require('../controllers/bookController')
 
 const router = express.Router()
 
-// base: localhost:3000/
+router.post('/', bookController.createBook)
+router.post('/multiple', bookController.createMultipleBooks)
 
-// post
-router.post('/books', bookController.createBook)
-router.post('/books', bookController.createMultipleBooks)
+router.get('/', bookController.getAllBooks)
+router.put('/', bookController.updateBookByTitle)
 
-// get
-router.get('/books', bookController.getAllBooks)
-router.get('/books', bookController.updateBookByTitle)
-router.get('/books/author/:author', bookController.getBooksByAuthor)
-router.get('/books/author/:genre/count', bookController.countBooksByGenre)
+router.delete('/', bookController.removeBookByTitle)
 
-// delete
-router.delete('/books', bookController.removeBookByTitle)
+router.get('/author/:author', bookController.getBooksByAuthor)
+router.get('/genre/:genre/count', bookController.countBooksByGenre)
 
-
-
-
-
-
-
-
-module.exports = router()
+module.exports = router
