@@ -15,6 +15,10 @@ const bookSchema = new mongoose.Schema({
     },
     genre: {
         type: String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 })
 

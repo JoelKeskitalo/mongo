@@ -6,7 +6,11 @@ const authorSchema = new mongoose.Schema({
         required: true,
     },
     birthYear: Number,
-    nationality: String
+    nationality: String,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 const Author = mongoose.model('Author', authorSchema)

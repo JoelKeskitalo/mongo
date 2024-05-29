@@ -1,6 +1,6 @@
 const Book = require('../models/bookModel')
 
-// promises med .then o .catch, istället för try o catch  
+// promises med .then o .catch, istället för try o catch   
 
 // create a fucking b00k-sama
 exports.createBook = (req, res) => {
@@ -44,16 +44,23 @@ exports.removeBookByTitle = (req, res) => {
 
 // hämta böcker av en viss författare
 exports.getBooksByAuthor = (req, res) => {
-    const { author } = req.body
-    Book.find({author})
-        .then((authorBooks) => res.status(200).json(authorBooks))
-        .catch((error) => res.status(400).json(error))
-} 
+    const { author } = req.params
+    Book.find({ author })
+        .populate('author')
+        .then((authorBooks) => {
+            if (authorBooks.length === 0) {
+                res.status(404).json({ message: 'No books found for this author' })
+            } else {
+                res.status(200).json({authorBooks})
+            }
+        })
+        .catch((error) => res.status(400).json({ message: 'Error fetching books', error }))
+};
 
 // räkna böcker som tillhör en viss genre 
 exports.countBooksByGenre = (req, res) => {
     const { genre } = req.params
-    Book.countDocuments({genre})
-        .then((count) => res.status(200).json(genre, count))
-        .catch((error) => res.status(400).json(error))
+    Book.countDocuments({ genre })
+        .then((count) => res.status(200).json({ genre: genre, count: count }))
+        .catch((error) => res.status(400).json({ message: 'Error counting books', error: error.message }))
 }
